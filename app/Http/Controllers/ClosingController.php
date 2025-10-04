@@ -42,12 +42,13 @@ class ClosingController extends Controller
             : null
         ]);
 
-        $filename = $this->excelService->generateClosingExcel($data);
+        $filepath = $this->excelService->generateClosingExcel($data);
+
+        if (!file_exists($filepath)) {
+            throw new \Exception('Generated file not found');
+        }
         
-        return response()->download(
-            storage_path('app/public/' . $filename),
-            $filename,
-            ['Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
-        )->deleteFileAfterSend();
+        return response()->download($filepath, 'Output_Closing.xlsx')
+        ->deleteFileAfterSend(true);
     }
 }
