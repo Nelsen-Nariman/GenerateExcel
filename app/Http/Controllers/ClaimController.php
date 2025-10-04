@@ -38,11 +38,14 @@ class ClaimController extends Controller
             'booster' => str_replace(',', '.', str_replace('.', '', $validated['booster']))
         ];
 
-            $filename = $this->excelService->generateClaimExcel($data);
+            $filepath = $this->excelService->generateClaimExcel($data);
+
+            if (!file_exists($filepath)) {
+                throw new \Exception('Generated file not found');
+            }
             
-            return response()->download(
-                storage_path('app/public/' . $filename)
-            )->deleteFileAfterSend(true);
+            return response()->download($filepath, 'Output_Claim.xlsx')
+            ->deleteFileAfterSend(true);
 
         } catch (\Exception $e) {
             return back()
