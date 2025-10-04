@@ -170,12 +170,12 @@ class ExcelService
         // Create the Excel file
         $writer = new Xlsx($spreadsheet);
         $filename = 'Output Closing.xlsx';
-        $path = storage_path('app/public/' . $filename);
+        $path = '/tmp/' . $filename;
         
         // Save the file
         $writer->save($path);
         
-        return $filename;
+        return $path;
     }
 
     public function generateClaimExcel(array $data)
@@ -235,12 +235,12 @@ class ExcelService
         // Create the Excel file
         $writer = new Xlsx($spreadsheet);
         $filename = 'Output Claim.xlsx';
-        $path = storage_path('app/public/' . $filename);
+        $path = '/tmp/' . $filename;
         
         // Save the file
         $writer->save($path);
         
-        return $filename;
+        return $path;
     }
 
     private function extractNumber($value)
