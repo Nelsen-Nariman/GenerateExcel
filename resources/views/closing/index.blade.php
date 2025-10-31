@@ -195,50 +195,118 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            function formatCurrencyInput(input, rawValue) {
+                input.value = new Intl.NumberFormat('id-ID').format(rawValue);
+            }
+        
             function formatCurrency(input) {
-                // Remove non-digit characters
                 let value = input.value.replace(/\D/g, '');
-                
-                // Format number with thousand separator
                 value = new Intl.NumberFormat('id-ID').format(value);
-                
-                // Update input value
                 input.value = value;
             }
-
+        
+            function parseCurrency(input) {
+                return parseInt(input.value.replace(/\D/g, '') || 0);
+            }
+        
             function calculateTotal() {
-                const premi = parseInt(document.getElementById('premi').value.replace(/\D/g, '') || 0);
-                const premiTambahan = parseInt(document.getElementById('premi_tertanggung_tambahan').value.replace(/\D/g, '') || 0);
+                const premi = parseCurrency(document.getElementById('premi'));
+                const premiTambahan = parseCurrency(document.getElementById('premi_tertanggung_tambahan'));
                 const total = premi + premiTambahan;
-                
                 document.getElementById('total_premi').value = new Intl.NumberFormat('id-ID').format(total);
             }
-
-            // Add event listeners to currency inputs
+        
+            // ---- Pricing rules ----
+            function getPremiValues(tipePlan, plan, tipeTanggungan) {
+                const data = {
+                    X: {
+                        'Tanpa Tanggungan Mandiri': {
+                            'BRONZE I': [6701000, 0],
+                            'BRONZE II': [5649000, 0],
+                            'SILVER': [8208000, 0],
+                            'GOLD': [13617000, 0],
+                            'TITANIUM': [16640000, 0],
+                            'PLATINUM': [19320000, 0],
+                        },
+                        'Dengan Tanggungan Mandiri': {
+                            'BRONZE I': [6701000, 6701000],
+                            'BRONZE II': [5649000, 5649000],
+                            'SILVER': [8208000, 8208000],
+                            'GOLD': [13617000, 13617000],
+                            'TITANIUM': [16640000, 16640000],
+                            'PLATINUM': [19320000, 19320000],
+                        }
+                    },
+                    S: {
+                        'Tanpa Tanggungan Mandiri': {
+                            'BRONZE I': [6528000, 0],
+                            'BRONZE II': [5544000, 0],
+                            'SILVER': [8208000, 0],
+                            'GOLD': [12960000, 0],
+                            'TITANIUM': [15600000, 0],
+                        },
+                        'Dengan Tanggungan Mandiri': {
+                            'BRONZE I': [6528000, 6528000],
+                            'BRONZE II': [5544000, 5544000],
+                            'SILVER': [8208000, 8208000],
+                            'GOLD': [12960000, 12960000],
+                            'TITANIUM': [15600000, 15600000],
+                        }
+                    }
+                };
+        
+                const [premi, premiTambahan] = data?.[tipePlan]?.[tipeTanggungan]?.[plan] || [0, 0];
+                return { premi, premiTambahan };
+            }
+        
+            // ---- Apply pricing automatically ----
+            function updatePremi() {
+                const tipePlan = document.querySelector('input[name="tipe_plan"]:checked')?.value;
+                const plan = document.querySelector('input[name="plan"]:checked')?.value;
+                const tipeTanggungan = document.querySelector('input[name="tipe_tanggungan"]:checked')?.value;
+        
+                if (!tipePlan || !plan || !tipeTanggungan) return;
+        
+                const { premi, premiTambahan } = getPremiValues(tipePlan, plan, tipeTanggungan);
+                formatCurrencyInput(document.getElementById('premi'), premi);
+                formatCurrencyInput(document.getElementById('premi_tertanggung_tambahan'), premiTambahan);
+                calculateTotal();
+            }
+        
+            // ---- Event listeners ----
             document.querySelectorAll('.currency-input').forEach(input => {
                 input.addEventListener('input', function() {
                     formatCurrency(this);
                     calculateTotal();
                 });
             });
-
-            // Get the plan elements
+        
+            // Update when plan/tanggungan/tipe_plan changes
+            ['tipe_plan', 'plan', 'tipe_tanggungan'].forEach(name => {
+                document.querySelectorAll(`input[name="${name}"]`).forEach(input => {
+                    input.addEventListener('change', updatePremi);
+                });
+            });
+        
+            // Hide PLATINUM if tipe_plan = S
             const tipePlanInputs = document.querySelectorAll('input[name="tipe_plan"]');
             const platinumOption = document.querySelector('.form-check:has(#platinum)');
-
-            // Add event listeners to tipe_plan radio buttons
             tipePlanInputs.forEach(input => {
                 input.addEventListener('change', function() {
                     if (this.value === 'S') {
                         platinumOption.style.display = 'none';
-                        // Uncheck platinum if it was selected
                         document.getElementById('platinum').checked = false;
                     } else {
                         platinumOption.style.display = 'inline-block';
                     }
+                    updatePremi();
                 });
             });
+        
+            // Run once on page load
+            updatePremi();
         });
     </script>
+
 </body>
 </html>
