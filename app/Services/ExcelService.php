@@ -49,25 +49,25 @@ class ExcelService
         $sheet->setCellValue('C6', $fullPlanName);
         $sheet->setCellValue('C7', $data['tipe_tanggungan']);
 
-        if ($data['tipe_plan'] === 'X'){
-            if ($data['tipe_klien'] === 'Tanpa Tanggungan Mandiri'){
-                if ($data['plan'] === 'BRONZE I'){
+        if ($this->data['tipe_plan'] === 'X'){
+            if ($this->data['tipe_klien'] === 'Tanpa Tanggungan Mandiri'){
+                if ($this->data['plan'] === 'BRONZE I'){
                     $data['premi'] = 6701000;
                     $data['premi_tertanggung_tambahan'] = 0;
                 }
-                else if ($data['plan'] === 'BRONZE II'){
+                else if ($this->data['plan'] === 'BRONZE II'){
                     $data['premi'] = 5649000;
                     $data['premi_tertanggung_tambahan'] = 0;
                 }
-                else if ($data['plan'] === 'SILVER'){
+                else if ($this->data['plan'] === 'SILVER'){
                     $data['premi'] = 8004000;
                     $data['premi_tertanggung_tambahan'] = 0;
                 }
-                else if ($data['plan'] === 'GOLD'){
+                else if ($this->data['plan'] === 'GOLD'){
                     $data['premi'] = 15449000;
                     $data['premi_tertanggung_tambahan'] = 0;
                 }
-                else if ($data['plan'] === 'TITANIUM'){
+                else if ($this->data['plan'] === 'TITANIUM'){
                     $data['premi'] = 22897000;
                     $data['premi_tertanggung_tambahan'] = 0;
                 }
@@ -77,23 +77,23 @@ class ExcelService
                 }
             }
             else{
-                if ($data['plan'] === 'BRONZE I'){
+                if ($this->data['plan'] === 'BRONZE I'){
                     $data['premi'] = 5027000;
                     $data['premi_tertanggung_tambahan'] = 0;
                 }
-                else if ($data['plan'] === 'BRONZE II'){
+                else if ($this->data['plan'] === 'BRONZE II'){
                     $data['premi'] = 4521000;
                     $data['premi_tertanggung_tambahan'] = 0;
                 }
-                else if ($data['plan'] === 'SILVER'){
+                else if ($this->data['plan'] === 'SILVER'){
                     $data['premi'] = 6005000;
                     $data['premi_tertanggung_tambahan'] = 0;
                 }
-                else if ($data['plan'] === 'GOLD'){
+                else if ($this->data['plan'] === 'GOLD'){
                     $data['premi'] = 10044000;
                     $data['premi_tertanggung_tambahan'] = 0;
                 }
-                else if ($data['plan'] === 'TITANIUM'){
+                else if ($this->data['plan'] === 'TITANIUM'){
                     $data['premi'] = 14886000;
                     $data['premi_tertanggung_tambahan'] = 0;
                 }
@@ -104,46 +104,46 @@ class ExcelService
             }
         }
         else{
-            if ($data['tipe_klien'] === 'Tanpa Tanggungan Mandiri'){
-                if ($data['plan'] === 'BRONZE I'){
+            if ($this->data['tipe_klien'] === 'Tanpa Tanggungan Mandiri'){
+                if ($this->data['plan'] === 'BRONZE I'){
                     $data['premi'] = 6210000;
                     $data['premi_tertanggung_tambahan'] = 0;
                 }
-                else if ($data['plan'] === 'BRONZE II'){
+                else if ($this->data['plan'] === 'BRONZE II'){
                     $data['premi'] = 4904000;
                     $data['premi_tertanggung_tambahan'] = 0;
                 }
-                else if ($data['plan'] === 'SILVER'){
+                else if ($this->data['plan'] === 'SILVER'){
                     $data['premi'] = 7639000;
                     $data['premi_tertanggung_tambahan'] = 0;
                 }
-                else if ($data['plan'] === 'GOLD'){
+                else if ($this->data['plan'] === 'GOLD'){
                     $data['premi'] = 11679000;
                     $data['premi_tertanggung_tambahan'] = 0;
                 }
-                else if ($data['plan'] === 'TITANIUM'){
+                else if ($this->data['plan'] === 'TITANIUM'){
                     $data['premi'] = 16303000;
                     $data['premi_tertanggung_tambahan'] = 0;
                 }
             }
             else{
-                if ($data['plan'] === 'BRONZE I'){
+                if ($this->data['plan'] === 'BRONZE I'){
                     $data['premi'] = 4659000;
                     $data['premi_tertanggung_tambahan'] = 0;
                 }
-                else if ($data['plan'] === 'BRONZE II'){
+                else if ($this->data['plan'] === 'BRONZE II'){
                     $data['premi'] = 3924000;
                     $data['premi_tertanggung_tambahan'] = 0;
                 }
-                else if ($data['plan'] === 'SILVER'){
+                else if ($this->data['plan'] === 'SILVER'){
                     $data['premi'] = 5729000;
                     $data['premi_tertanggung_tambahan'] = 0;
                 }
-                else if ($data['plan'] === 'GOLD'){
+                else if ($this->data['plan'] === 'GOLD'){
                     $data['premi'] = 7592000;
                     $data['premi_tertanggung_tambahan'] = 0;
                 }
-                else if ($data['plan'] === 'TITANIUM'){
+                else if ($this->data['plan'] === 'TITANIUM'){
                     $data['premi'] = 11124000;
                     $data['premi_tertanggung_tambahan'] = 0;
                 }
